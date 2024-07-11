@@ -1,18 +1,8 @@
-import React from "react";
+import { useGetPriceEntries } from "@/services/stocks";
+import React, { useMemo } from "react";
 import Chart, { Props } from "react-apexcharts";
 
-const state: Props["series"] = [
-  {
-    name: "Series1",
-    data: [31, 40, 28, 51, 42, 109, 100],
-  },
-  {
-    name: "Series2",
-    data: [11, 32, 45, 32, 34, 52, 41],
-  },
-];
-
-const options: Props["options"] = {
+const baseOptions: Props["options"] = {
   chart: {
     type: "area",
     animations: {
@@ -32,11 +22,9 @@ const options: Props["options"] = {
       show: false,
     },
   },
-
   xaxis: {
-    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+    type: "datetime",
     labels: {
-      // show: false,
       style: {
         colors: "hsl(var(--nextui-default-800))",
       },
@@ -51,13 +39,15 @@ const options: Props["options"] = {
   yaxis: {
     labels: {
       style: {
-        // hsl(var(--nextui-content1-foreground))
         colors: "hsl(var(--nextui-default-800))",
       },
     },
   },
   tooltip: {
-    enabled: false,
+    enabled: true,
+    x: {
+      format: "dd MMM yyyy HH:mm:ss",
+    },
   },
   grid: {
     show: true,
@@ -68,21 +58,56 @@ const options: Props["options"] = {
   stroke: {
     curve: "smooth",
     fill: {
-      colors: ["red"],
+      colors: ["#34D399"],
     },
   },
-  // @ts-ignore
-  markers: false,
+  markers: {
+    size: 4,
+    colors: ["#34D399"],
+    strokeColors: "#fff",
+    strokeWidth: 2,
+    hover: {
+      size: 7,
+    },
+  },
 };
 
 export const Steam = () => {
+  const { data: priceEntriesData } = useGetPriceEntries();
+
+  // Transformar os dados de priceEntriesData para o formato esperado pelo gráfico
+  const seriesData = useMemo(() => {
+    if (!priceEntriesData) return [];
+
+    const data = priceEntriesData.map(entry => ({
+      x: new Date(entry.created_at),
+      y: parseFloat(entry.close_price),
+      symbol: entry.stock.symbol,
+    }));
+
+    return [
+      {
+        name: "Close Prices",
+        data,
+      },
+    ];
+  }, [priceEntriesData]);
+
+  const chartOptions = useMemo(() => {
+    return {
+      ...baseOptions,
+      xaxis: {
+        ...baseOptions.xaxis,
+        categories: priceEntriesData ? priceEntriesData.map(entry => entry.created_at) : [],
+      },
+    };
+  }, [priceEntriesData]);
+
   return (
-    <>
-      <div className="w-full z-20">
-        <div id="chart">
-          <Chart options={options} series={state} type="area" height={425} />
-        </div>
+    <div className="w-full z-20">
+      <div id="chart">
+        <Chart options={chartOptions} series={seriesData} type="area" height={425} />
       </div>
-    </>
+    </div>
   );
 };

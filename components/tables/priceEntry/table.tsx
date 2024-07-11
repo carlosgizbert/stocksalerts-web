@@ -1,5 +1,4 @@
 import {
-  Link,
   Table,
   TableBody,
   TableCell,
@@ -7,13 +6,15 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import React from "react";
-import { columns, users } from "./data";
+import { columns } from "./data";
 import { RenderCell } from "./render-cell";
+import { useGetPriceEntries } from "@/services/stocks";
 
-export const TableWrapper = () => {
+export const PriceEntryTable = () => {
+  const { data, isLoading } = useGetPriceEntries();
+
   return (
-    <div className=" w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4">
       <Table aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (
@@ -26,18 +27,19 @@ export const TableWrapper = () => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={users}>
+        <TableBody items={data || []}>
           {(item) => (
-            <TableRow>
+            <TableRow key={item.id}>
               {(columnKey) => (
                 <TableCell>
-                  {RenderCell({ user: item, columnKey: columnKey })}
+                  {RenderCell({ priceEntry: item, columnKey: columnKey })}
                 </TableCell>
               )}
             </TableRow>
           )}
         </TableBody>
       </Table>
+      {isLoading && <div>Loading...</div>}
     </div>
   );
 };

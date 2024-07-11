@@ -28,7 +28,7 @@ export const UserDropdown = () => {
             as='button'
             color='secondary'
             size='md'
-            src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
+            src='https://avatars.githubusercontent.com/u/48734715?v=4'
           />
         </DropdownTrigger>
       </NavbarItem>
@@ -38,21 +38,14 @@ export const UserDropdown = () => {
         <DropdownItem
           key='profile'
           className='flex flex-col justify-start w-full items-start'>
-          <p>Signed in as</p>
-          <p>zoey@example.com</p>
+          <p>carlosgizbert@gmail.com</p>
         </DropdownItem>
-        <DropdownItem key='settings'>My Settings</DropdownItem>
-        <DropdownItem key='team_settings'>Team Settings</DropdownItem>
-        <DropdownItem key='analytics'>Analytics</DropdownItem>
-        <DropdownItem key='system'>System</DropdownItem>
-        <DropdownItem key='configurations'>Configurations</DropdownItem>
-        <DropdownItem key='help_and_feedback'>Help & Feedback</DropdownItem>
         <DropdownItem
           key='logout'
           color='danger'
           className='text-danger'
           onPress={handleLogout}>
-          Log Out
+          Sair
         </DropdownItem>
         <DropdownItem key='switch'>
           <DarkModeSwitch />
