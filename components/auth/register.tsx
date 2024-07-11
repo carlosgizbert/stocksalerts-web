@@ -48,7 +48,7 @@ export const Register = () => {
   return (
     <div className="w-full flex flex-col md:w-96">
       <div className="text-3xl font-bold">
-        criar conta <span className="text-yellow-600">grátis</span>
+        Criar conta <span className="text-yellow-600">grátis</span>
       </div>
       <div className="flex gap-2 mt-3 mb-6">
         <p className="text-gray-600">já possui conta?</p>

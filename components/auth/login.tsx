@@ -84,7 +84,6 @@ export default function Login() {
         </Link>
         <Button
           className="w-full"
-          color="primary"
           fullWidth={false}
           type="submit"
           variant="solid"

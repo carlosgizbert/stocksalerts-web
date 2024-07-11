@@ -17,7 +17,7 @@ export const UserDropdown = () => {
 
   const handleLogout = useCallback(async () => {
     await deleteAuthCookie();
-    router.replace("/login");
+    router.replace("/");
   }, [router]);
 
   return (
