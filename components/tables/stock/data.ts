@@ -6,13 +6,6 @@ const columns = [
    {name: 'modificar', uid: 'actions'},
 ];
 
-const statusOptions = [
-   {name: "Active", uid: "active"},
-   {name: "Paused", uid: "paused"},
-   {name: "Vacation", uid: "vacation"},
- ];
-
  export {
    columns,
-   statusOptions
  }

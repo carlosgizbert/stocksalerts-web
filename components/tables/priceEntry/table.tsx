@@ -18,31 +18,32 @@ import {
 } from "@nextui-org/react";
 import { columns } from "./data";
 import { capitalize } from "./utils";
-import { useGetStocks } from "@/services/stocks";
-import { Stock } from "@/models/stock";
+import { useGetPriceEntries } from "@/services/stocks";
 import FeatherIcon from "feather-icons-react";
 import { ChangeEvent, Key, useCallback, useMemo, useState } from "react";
-import { AddStock } from "@/components/stocks/add-user";
+import { PriceEntry } from "@/models/priceEntry";
+import { timeAgo } from "@/utils";
 
 const INITIAL_VISIBLE_COLUMNS = [
   "symbol",
-  "lower_tunnel_limit",
-  "upper_tunnel_limit",
+  "open_price",
+  "close_price",
+  "created_at",
   "actions",
 ];
 
-export function StocksTable() {
+export function PriceEntryTable() {
   const [filterValue, setFilterValue] = useState("");
   const [visibleColumns, setVisibleColumns] = useState<Selection>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: "symbol",
     direction: "ascending",
   });
 
-  const { data, isLoading, error } = useGetStocks();
+  const { data, isLoading, error } = useGetPriceEntries();
 
   const [page, setPage] = useState(1);
 
@@ -57,15 +58,15 @@ export function StocksTable() {
   }, [visibleColumns]);
 
   const filteredItems = useMemo(() => {
-    let filteredStocks = [...(data || [])];
+    let filteredPrices = [...(data || [])];
 
     if (hasSearchFilter) {
-      filteredStocks = filteredStocks.filter((stock) =>
-        stock.symbol.toLowerCase().includes(filterValue.toLowerCase())
+      filteredPrices = filteredPrices.filter((price) =>
+        price.stock.symbol.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
 
-    return filteredStocks;
+    return filteredPrices;
   }, [data, filterValue, hasSearchFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
@@ -78,27 +79,35 @@ export function StocksTable() {
   }, [page, filteredItems, rowsPerPage]);
 
   const sortedItems = useMemo(() => {
-    return [...items].sort((a: Stock, b: Stock) => {
-      const first = a[sortDescriptor.column as keyof Stock];
-      const second = b[sortDescriptor.column as keyof Stock];
+    return [...items].sort((a: PriceEntry, b: PriceEntry) => {
+      const first = a[sortDescriptor.column as keyof PriceEntry];
+      const second = b[sortDescriptor.column as keyof PriceEntry];
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = useCallback((stock: Stock, columnKey: Key) => {
-    const cellValue = stock[columnKey as keyof Stock];
+  const renderCell = useCallback((price: PriceEntry, columnKey: Key) => {
+    const cellValue = price[columnKey as keyof PriceEntry];
 
     switch (columnKey) {
       case "symbol":
         return (
-          <span className="font-semibold text-primary-500">{stock.symbol}</span>
+          <span className="font-semibold">
+            {price.stock.symbol}
+          </span>
         );
-      case "lower_tunnel_limit":
-        return <span>R${stock.lower_tunnel_limit}</span>;
-      case "upper_tunnel_limit":
-        return <span>R${stock.upper_tunnel_limit}</span>;
+      case "open_price":
+        return <span>R${price.open_price}</span>;
+      case "date":
+        return <span>aa{price.date}</span>;
+      case "time":
+        return <span>R${price.time}</span>;
+      case "close_price":
+        return <span>R${price.close_price}</span>;
+        case "created_at":
+          return <span>{timeAgo(new Date(price.created_at))}</span>;
       case "actions":
         return (
           <div className="relative flex justify-end">
@@ -130,7 +139,7 @@ export function StocksTable() {
           </div>
         );
       default:
-        return cellValue;
+        return String(cellValue);
     }
   }, []);
 
@@ -211,12 +220,11 @@ export function StocksTable() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <AddStock />
           </div>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            {data?.length} ativos
+            {data?.length} preços
           </span>
           <label className="flex items-center text-default-400 text-small">
             Linhas por página:
@@ -224,9 +232,9 @@ export function StocksTable() {
               className="bg-transparent outline-none text-default-400 text-small"
               onChange={onRowsPerPageChange}
             >
-              <option value="5">5</option>
               <option value="10">10</option>
-              <option value="15">15</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
             </select>
           </label>
         </div>
@@ -268,7 +276,7 @@ export function StocksTable() {
             variant="flat"
             onPress={onNextPage}
           >
-            Próxima
+            Próximo
           </Button>
         </div>
       </div>
@@ -276,16 +284,17 @@ export function StocksTable() {
   }, [page, pages, onPreviousPage, onNextPage]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Atualizando...</div>;
   }
 
   if (error) {
-    return <div>Erro ao obter ativos</div>;
+    return <div>Error loading stocks</div>;
   }
 
   return (
     <Table
       isStriped
+      isHeaderSticky
       aria-label="Stocks table with custom cells, pagination and sorting"
       bottomContent={bottomContent}
       sortDescriptor={sortDescriptor}
@@ -304,10 +313,10 @@ export function StocksTable() {
         )}
       </TableHeader>
       <TableBody emptyContent={"Nenhum resultado"}>
-        {sortedItems.map((stock) => (
-          <TableRow key={stock.id}>
+        {sortedItems.map((price) => (
+          <TableRow key={price.id}>
             {(columnKey) => (
-              <TableCell>{renderCell(stock, columnKey)}</TableCell>
+              <TableCell>{renderCell(price, columnKey)}</TableCell>
             )}
           </TableRow>
         ))}

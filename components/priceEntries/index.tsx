@@ -1,6 +1,5 @@
 "use client";
-import { Input } from "@nextui-org/react";
-import { PriceEntryTable } from "../tables/priceEntry";
+import { PriceEntryTable } from "../tables/priceEntry/table";
 
 export const PriceEntries = () => {
   return (
@@ -9,16 +8,6 @@ export const PriceEntries = () => {
         <div className="w-full h-full flex flex-col gap-2">
           <div className="flex items-center justify-between gap-4">
             <h3 className="text-xl font-semibold">Histórico de preços</h3>
-          </div>
-          <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
-            <Input
-              variant="bordered"
-              classNames={{
-                input: "w-full",
-                mainWrapper: "w-full",
-              }}
-              placeholder="Buscar ..."
-            />
           </div>
         </div>
         <PriceEntryTable />

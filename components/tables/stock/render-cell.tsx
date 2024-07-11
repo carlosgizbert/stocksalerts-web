@@ -1,4 +1,5 @@
 import { Stock } from "@/models/stock";
+import { timeAgo } from '@/utils/index'
 
 interface Props {
   stock: Stock;
@@ -31,40 +32,9 @@ export const RenderCell = ({ stock, columnKey }: Props) => {
     case "created_at":
       return (
         <div>
-          <span>{stock.created_at}</span>
+          <span>{timeAgo(new Date(stock.created_at))}</span>
         </div>
       );
-
-    // case "created_at":
-    //   return (
-    //     <div className="flex items-center gap-4 ">
-    //       <div>
-    //         <Tooltip content="Details">
-    //           <button onClick={() => console.log("View user", user.id)}>
-    //             <EyeIcon size={20} fill="#979797" />
-    //           </button>
-    //         </Tooltip>
-    //       </div>
-    //       <div>
-    //         <Tooltip content="Edit user" color="secondary">
-    //           <button onClick={() => console.log("Edit user", user.id)}>
-    //             <EditIcon size={20} fill="#979797" />
-    //           </button>
-    //         </Tooltip>
-    //       </div>
-    //       <div>
-    //         <Tooltip
-    //           content="Delete user"
-    //           color="danger"
-    //           onClick={() => console.log("Delete user", user.id)}
-    //         >
-    //           <button>
-    //             <DeleteIcon size={20} fill="#FF0080" />
-    //           </button>
-    //         </Tooltip>
-    //       </div>
-    //     </div>
-    //   );
     default:
       return cellValue;
   }
