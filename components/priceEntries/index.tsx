@@ -1,6 +1,6 @@
 "use client";
 import { Input } from "@nextui-org/react";
-import { PriceEntryTable } from "../tables/priceEntry/table";
+import { PriceEntryTable } from "../tables/priceEntry";
 
 export const PriceEntries = () => {
   return (

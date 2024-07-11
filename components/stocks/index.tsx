@@ -1,6 +1,4 @@
 "use client";
-import { Input } from "@nextui-org/react";
-import { AddStock } from "./add-user";
 import { StocksTable } from "../tables/stock/table";
 
 export const Stocks = () => {
@@ -9,18 +7,7 @@ export const Stocks = () => {
       <div className="flex flex-col pt-4 justify-center gap-4 xl:gap-6 px-4 lg:px-0 flex-wrap xl:flex-nowrap sm:pt-8 max-w-[90rem] mx-auto w-full">
         <div className="w-full h-full flex flex-col gap-2">
           <div className="flex items-center justify-between gap-4">
-            <h3 className="text-xl font-semibold">Ações</h3>
-            <AddStock />
-          </div>
-          <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
-            <Input
-              variant="bordered"
-              classNames={{
-                input: "w-full",
-                mainWrapper: "w-full",
-              }}
-              placeholder="Buscar ..."
-            />
+            <h3 className="text-xl font-semibold">Ativos</h3>
           </div>
         </div>
         <StocksTable />

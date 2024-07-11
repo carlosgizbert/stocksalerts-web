@@ -3,7 +3,7 @@ const columns = [
    {name: 'limite mínimo', uid: 'lower_tunnel_limit', sortable: true},
    {name: 'limite máximo', uid: 'upper_tunnel_limit', sortable: true},
    {name: 'última notificação', uid: 'created_at', sortable: true},
-   {name: 'ações', uid: 'actions'},
+   {name: 'modificar', uid: 'actions'},
 ];
 
 const statusOptions = [

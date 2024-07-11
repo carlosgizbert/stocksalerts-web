@@ -13,22 +13,30 @@ import {
   DropdownItem,
   Pagination,
   Selection,
-  SortDescriptor
+  SortDescriptor,
+  Tooltip,
 } from "@nextui-org/react";
-import {columns, statusOptions} from "./data";
-import {capitalize} from "./utils";
+import { columns, statusOptions } from "./data";
+import { capitalize } from "./utils";
 import { useGetStocks } from "@/services/stocks";
 import { Stock } from "@/models/stock";
 import FeatherIcon from "feather-icons-react";
 import { ChangeEvent, Key, useCallback, useMemo, useState } from "react";
+import { AddStock } from "@/components/stocks/add-user";
 
-const INITIAL_VISIBLE_COLUMNS = ["symbol", "lower_tunnel_limit", "upper_tunnel_limit", "actions"];
+const INITIAL_VISIBLE_COLUMNS = [
+  "symbol",
+  "lower_tunnel_limit",
+  "upper_tunnel_limit",
+  "actions",
+];
 
 export function StocksTable() {
   const [filterValue, setFilterValue] = useState("");
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set([]));
-  const [visibleColumns, setVisibleColumns] = useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
-  const [statusFilter, setStatusFilter] = useState<Selection>("all");
+  const [visibleColumns, setVisibleColumns] = useState<Selection>(
+    new Set(INITIAL_VISIBLE_COLUMNS)
+  );
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: "symbol",
@@ -44,7 +52,9 @@ export function StocksTable() {
   const headerColumns = useMemo(() => {
     if (visibleColumns === "all") return columns;
 
-    return columns.filter((column) => Array.from(visibleColumns).includes(column.uid));
+    return columns.filter((column) =>
+      Array.from(visibleColumns).includes(column.uid)
+    );
   }, [visibleColumns]);
 
   const filteredItems = useMemo(() => {
@@ -55,14 +65,9 @@ export function StocksTable() {
         stock.symbol.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
-    if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-      filteredStocks = filteredStocks.filter((stock) =>
-        Array.from(statusFilter).includes(stock.symbol),
-      );
-    }
 
     return filteredStocks;
-  }, [data, filterValue, hasSearchFilter, statusFilter]);
+  }, [data, filterValue, hasSearchFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -88,31 +93,39 @@ export function StocksTable() {
 
     switch (columnKey) {
       case "symbol":
-        return (
-          <span>{stock.symbol}</span>
-        );
+        return <span className="font-semibold text-primary-500">{stock.symbol}</span>;
       case "lower_tunnel_limit":
-        return (
-          <span>{stock.lower_tunnel_limit}</span>
-        );
+        return <span>R${stock.lower_tunnel_limit}</span>;
       case "upper_tunnel_limit":
-        return (
-          <span>{stock.upper_tunnel_limit}</span>
-        );
+        return <span>R${stock.upper_tunnel_limit}</span>;
       case "actions":
         return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <FeatherIcon icon="more-vertical" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>Editar</DropdownItem>
-                <DropdownItem>Apagar</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+          <div className="relative flex justify-end">
+            <Tooltip color="primary" content="Editar">
+              <Button isIconOnly color="primary" variant="light">
+                <FeatherIcon
+                  icon="edit-3"
+                  className="text-primary-500"
+                  strokeWidth={1.5}
+                  size={20}
+                />
+              </Button>
+            </Tooltip>
+            <Tooltip color="danger" content="Excluir">
+              <Button
+                isIconOnly
+                color="danger"
+                variant="light"
+                onClick={() => null}
+              >
+                <FeatherIcon
+                  icon="trash"
+                  className="text-red-500"
+                  strokeWidth={1.5}
+                  size={20}
+                />
+              </Button>
+            </Tooltip>
           </div>
         );
       default:
@@ -132,10 +145,13 @@ export function StocksTable() {
     }
   }, [page]);
 
-  const onRowsPerPageChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    setRowsPerPage(Number(e.target.value));
-    setPage(1);
-  }, []);
+  const onRowsPerPageChange = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      setRowsPerPage(Number(e.target.value));
+      setPage(1);
+    },
+    []
+  );
 
   const onSearchChange = useCallback((value?: string) => {
     if (value) {
@@ -146,10 +162,10 @@ export function StocksTable() {
     }
   }, []);
 
-  const onClear = useCallback(()=>{
-    setFilterValue("")
-    setPage(1)
-  },[])
+  const onClear = useCallback(() => {
+    setFilterValue("");
+    setPage(1);
+  }, []);
 
   const topContent = useMemo(() => {
     return (
@@ -158,8 +174,10 @@ export function StocksTable() {
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
-            placeholder="Buscar símbolo..."
-            startContent={<FeatherIcon icon="search" />}
+            placeholder="Buscar símbolo do ativo..."
+            startContent={
+              <FeatherIcon icon="search" size={18} strokeWidth={1.5} />
+            }
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
@@ -167,29 +185,13 @@ export function StocksTable() {
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FeatherIcon icon="chevron" />} variant="flat">
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FeatherIcon icon="plus" />} variant="flat">
-                  Columns
+                <Button
+                  endContent={
+                    <FeatherIcon icon="plus" size={18} strokeWidth={1.5} />
+                  }
+                  variant="flat"
+                >
+                  Colunas
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
@@ -207,15 +209,15 @@ export function StocksTable() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button color="primary" endContent={<FeatherIcon icon="plus" />}>
-              Add New
-            </Button>
+            <AddStock />
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">{data?.length} ações</span>
+          <span className="text-default-400 text-small">
+            {data?.length} ativos
+          </span>
           <label className="flex items-center text-default-400 text-small">
-            Rows per page:
+            Linhas por página:
             <select
               className="bg-transparent outline-none text-default-400 text-small"
               onChange={onRowsPerPageChange}
@@ -228,7 +230,14 @@ export function StocksTable() {
         </div>
       </div>
     );
-  }, [filterValue, onSearchChange, statusFilter, visibleColumns, data?.length, onRowsPerPageChange, onClear]);
+  }, [
+    filterValue,
+    onSearchChange,
+    visibleColumns,
+    data?.length,
+    onRowsPerPageChange,
+    onClear,
+  ]);
 
   const bottomContent = useMemo(() => {
     return (
@@ -248,16 +257,33 @@ export function StocksTable() {
           onChange={setPage}
         />
         <div className="hidden sm:flex w-[30%] justify-end gap-2">
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
+          <Button
+            isDisabled={pages === 1}
+            size="sm"
+            variant="flat"
+            onPress={onPreviousPage}
+          >
             Previous
           </Button>
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
+          <Button
+            isDisabled={pages === 1}
+            size="sm"
+            variant="flat"
+            onPress={onNextPage}
+          >
             Next
           </Button>
         </div>
       </div>
     );
-  }, [selectedKeys, filteredItems.length, page, pages, onPreviousPage, onNextPage]);
+  }, [
+    selectedKeys,
+    filteredItems.length,
+    page,
+    pages,
+    onPreviousPage,
+    onNextPage,
+  ]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -269,6 +295,7 @@ export function StocksTable() {
 
   return (
     <Table
+      isStriped
       aria-label="Stocks table with custom cells, pagination and sorting"
       bottomContent={bottomContent}
       sortDescriptor={sortDescriptor}

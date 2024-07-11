@@ -8,6 +8,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
+import FeatherIcon from "feather-icons-react";
 import React from "react";
 
 export const AddStock = () => {
@@ -15,44 +16,40 @@ export const AddStock = () => {
 
   return (
     <div>
-      <Button onPress={onOpen} color="primary" variant="solid">
-          Configurar ativo
-        </Button>
-        <Modal
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          placement="top-center"
-        >
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className="flex flex-col gap-1">
-                  Monitorar ativo
-                </ModalHeader>
-                <ModalBody>
-                  <Input label="Símbolo" variant="faded" />
-                  {/* <Input label="Descrição" variant="faded" /> */}
-                  <Input label="Limite mínimo" variant="faded" />
-                  <Input label="Limite máximo" variant="faded" />
+      <Button onPress={onOpen} color="primary" variant="solid" endContent={<FeatherIcon icon="plus" size={18} />}>
+        Cadastrar ativo
+      </Button>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Cadastrar ativo
+              </ModalHeader>
+              <ModalBody>
+                <Input label="Símbolo" variant="faded" />
+                {/* <Input label="Descrição" variant="faded" /> */}
+                <Input label="Limite mínimo" variant="faded" />
+                <Input label="Limite máximo" variant="faded" />
 
-                  <Input
-                    label="Frequência da verificação (em minutos)"
-                    type="number"
-                    variant="faded"
-                  />
-                </ModalBody>
-                <ModalFooter>
-                  <Button variant="flat" onClick={onClose}>
-                    Fechar
-                  </Button>
-                  <Button color="primary" onPress={onClose}>
-                    Salvar
-                  </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
+                <Input
+                  label="Frequência da verificação (em minutos)"
+                  type="number"
+                  variant="faded"
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button variant="flat" onClick={onClose}>
+                  Fechar
+                </Button>
+                <Button color="primary" onPress={onClose}>
+                  Salvar
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };

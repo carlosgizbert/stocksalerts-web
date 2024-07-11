@@ -35,7 +35,7 @@ export const SidebarWrapper = () => {
             />
               <SidebarItem
                 isActive={pathname === "/stocks"}
-                title="Ações"
+                title="Ativos monitorados"
                 icon={<FeatherIcon icon="layers" size={18} strokeWidth={1.5} />}
                 href="stocks"
               />
