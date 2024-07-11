@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { getCookie } from 'cookies-next';
 import { signOut } from 'next-auth/react';
 
-export const BASE_API_URL = 'http://localhost:8000';
+export const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL || 'http://localhost:8000';
 
 export const CACHE_QUERY_KEYS = {
   useGetStocks: 'getStocks',
