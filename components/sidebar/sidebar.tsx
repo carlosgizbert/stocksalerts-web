@@ -37,15 +37,15 @@ export const SidebarWrapper = () => {
                 isActive={pathname === "/panel/stocks"}
                 title="Ativos monitorados"
                 icon={<FeatherIcon icon="layers" size={18} strokeWidth={1.5} />}
-                href="panel/stocks"
+                href="/panel/stocks"
               />
               <SidebarItem
-                isActive={pathname === "/price-entries"}
+                isActive={pathname === "/panel/price-entries"}
                 title="Histórico de preços"
                 icon={
                   <FeatherIcon icon="activity" size={18} strokeWidth={1.5} />
                 }
-                href="price-entries"
+                href="/panel/price-entries"
               />
             </SidebarMenu>
           </div>

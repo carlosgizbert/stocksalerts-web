@@ -276,7 +276,7 @@ export function StocksTable() {
   }, [page, pages, onPreviousPage, onNextPage]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Atualizando...</div>;
   }
 
   if (error) {
