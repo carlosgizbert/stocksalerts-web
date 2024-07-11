@@ -9,8 +9,8 @@ import {
 } from "@tanstack/react-query";
 
 import { CACHE_QUERY_KEYS, QUERIES_CONFIG } from "..";
-import { getPriceEntries, getStocks } from "./api";
-import { GetPriceEntriesResponse, GetStocksResponse } from "./dto";
+import { createStock, getPriceEntries, getStocks } from "./api";
+import { CreateStockPayload, CreateStockResponse, GetPriceEntriesResponse, GetStocksResponse } from "./dto";
 
 import { MutateProps } from "../dto";
 
@@ -30,108 +30,37 @@ export function useGetPriceEntries(): UseQueryResult<GetPriceEntriesResponse[], 
   });
 }
 
-// export function useGetFeatureFlag(
-//   flag_id: string,
-// ): UseQueryResult<GetFeatureFlagResponse, Error> {
-//   return useQuery({
-//     queryKey: [CACHE_QUERY_KEYS.useGetFeatureFlag, flag_id],
-//     queryFn: () => getFlag({ flag_id }),
-//     ...QUERIES_CONFIG
-//   });
-// }
 
-// interface UseCreateFeatureFlagProps {
-//   onSuccess?: (data: CreateFeatureFlagResponse) => void;
-//   onError?: (error: Error) => void;
-// }
+interface UseCreateStockProps {
+  onSuccess?: (data: CreateStockResponse) => void;
+  onError?: (error: Error) => void;
+}
 
-// export function useCreateFeatureFlag({
-//   onError = () => null,
-//   onSuccess = () => null,
-// }: UseCreateFeatureFlagProps): UseMutationResult<
-//   CreateFeatureFlagResponse,
-//   Error,
-//   CreateFeatureFlagPayload,
-//   unknown
-// > {
-//   const queryClient = useQueryClient();
+export function useCreateStock({
+  onError = () => null,
+  onSuccess = () => null,
+}: UseCreateStockProps): UseMutationResult<
+CreateStockResponse,
+  Error,
+  CreateStockPayload,
+  unknown
+> {
+  const queryClient = useQueryClient();
 
-//   return useMutation({
-//     mutationFn: createFlag,
-//     onSuccess: (data: CreateFeatureFlagResponse) => {
-//       if (onSuccess) {
-//         onSuccess(data);
-//       }
-//       queryClient.invalidateQueries({
-//         queryKey: [CACHE_QUERY_KEYS.useGetFeatureFlags],
-//       });
-//     },
-//     onError: (error) => {
-//       if (onError) {
-//         onError(error);
-//       }
-//     },
-//   });
-// }
-
-// interface GenericFeatureFlagProps extends MutateProps {
-//   currentFlagId: string;
-// }
-
-// export function usePatchFeatureFlag({
-//   onError = (_error: Error) => null,
-//   onSuccess = () => null,
-// }: GenericFeatureFlagProps): UseMutationResult<
-//   GetFeatureFlagResponse,
-//   Error,
-//   PatchFeatureFlagPayload,
-//   unknown
-// > {
-//   const queryClient = useQueryClient();
-
-//   return useMutation({
-//     mutationFn: (payload) => patchFlag(payload),
-//     onSuccess: () => {
-//       if (onSuccess) {
-//         onSuccess();
-//       }
-//       queryClient.invalidateQueries({
-//         queryKey: [CACHE_QUERY_KEYS.useGetFeatureFlags],
-//       });
-//     },
-//     onError: (error) => {
-//       if (onError) {
-//         onError(error);
-//       }
-//     },
-//   });
-// }
-
-// export function useDeleteFeatureFlag({
-//   onError = () => null,
-//   onSuccess = () => null,
-// }: MutateProps): UseMutationResult<
-//   DeleteFeatureFlagResponse,
-//   Error,
-//   DeleteFeatureFlagPayload,
-//   unknown
-// > {
-//   const queryClient = useQueryClient();
-
-//   return useMutation({
-//     mutationFn: (payload) => deleteFlag(payload),
-//     onSuccess: () => {
-//       if (onSuccess) {
-//         onSuccess();
-//       }
-//       queryClient.invalidateQueries({
-//         queryKey: [CACHE_QUERY_KEYS.useGetFeatureFlags],
-//       });
-//     },
-//     onError: (error) => {
-//       if (onError) {
-//         onError(error);
-//       }
-//     },
-//   });
-// }
+  return useMutation({
+    mutationFn: createStock,
+    onSuccess: (data: CreateStockResponse) => {
+      if (onSuccess) {
+        onSuccess(data);
+      }
+      queryClient.invalidateQueries({
+        queryKey: [CACHE_QUERY_KEYS.useGetStocks],
+      });
+    },
+    onError: (error) => {
+      if (onError) {
+        onError(error);
+      }
+    },
+  });
+}

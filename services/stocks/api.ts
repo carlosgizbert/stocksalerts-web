@@ -1,4 +1,5 @@
 import {
+  CreateStockPayload,
   GetPriceEntriesResponse,
   GetStocksResponse
 } from './dto';
@@ -23,19 +24,10 @@ export async function getPriceEntries() {
   return data;
 }
 
-// export async function getFlag({ flag_id }: GetFeatureFlagPayload) {
-//   const { data } = await api.get<GetFeatureFlagResponse>(
-//     `${FLAGS_API_BASE_URL}/flags/auth/flag_id/${flag_id}/`,
-//   );
-
-//   return data;
-// }
-
-// export async function createFlag(payload: CreateFeatureFlagPayload) {
-//   const { data } = await api.post(`${FLAGS_API_BASE_URL}/flags/auth/`, payload);
-
-//   return data;
-// }
+export async function createStock(payload: CreateStockPayload) {
+  const { data } = await api.post(`${FLAGS_API_BASE_URL}/stock/`, payload);
+  return data;
+}
 
 // export async function patchFlag(payload: PatchFeatureFlagPayload) {
 //   const { data } = await api.patch(

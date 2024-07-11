@@ -4,21 +4,30 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Navbar,
   NavbarItem,
 } from "@nextui-org/react";
-import React, { useCallback } from "react";
 import { DarkModeSwitch } from "./darkmodeswitch";
 import { useRouter } from "next/navigation";
-import { deleteAuthCookie } from "@/actions/auth.action";
+import { deleteCookie } from "cookies-next";
+import { signOut } from "next-auth/react";
+import { CACHE_QUERY_KEYS } from "@/services";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const UserDropdown = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
 
-  const handleLogout = useCallback(async () => {
-    await deleteAuthCookie();
-    router.replace("/");
-  }, [router]);
+  const handleSignOut = async () => {
+    await signOut({
+      redirect: false,
+    });
+    deleteCookie("@auth:jwt")
+    await queryClient.invalidateQueries({
+      queryKey: Object.values(CACHE_QUERY_KEYS),
+    });
+    queryClient.clear();
+    router.push('/');
+  };
 
   return (
     <Dropdown>
@@ -44,7 +53,7 @@ export const UserDropdown = () => {
           key='logout'
           color='danger'
           className='text-danger'
-          onPress={handleLogout}>
+          onPress={handleSignOut}>
           Sair
         </DropdownItem>
         <DropdownItem key='switch'>

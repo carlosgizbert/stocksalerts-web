@@ -22,7 +22,7 @@ import { useGetStocks } from "@/services/stocks";
 import { Stock } from "@/models/stock";
 import FeatherIcon from "feather-icons-react";
 import { ChangeEvent, Key, useCallback, useMemo, useState } from "react";
-import { AddStock } from "@/components/stocks/add-user";
+import { AddStock } from "@/components/stocks/add-stock";
 
 const INITIAL_VISIBLE_COLUMNS = [
   "symbol",
