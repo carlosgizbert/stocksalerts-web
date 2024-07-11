@@ -1,10 +1,19 @@
-import { AuthLayoutWrapper } from "@/components/auth/authLayout";
-import "@/styles/globals.css";
+import '@/styles/globals.css';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import { AuthLayoutWrapper } from '@/components/templates/auth/authLayout';
+import { nextAuthOptions } from '../api/auth/[...nextauth]/config';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
+  const session = await getServerSession(nextAuthOptions);
+
+  if (session) {
+    redirect('/panel');
+  }
+
   return <AuthLayoutWrapper>{children}</AuthLayoutWrapper>;
 }

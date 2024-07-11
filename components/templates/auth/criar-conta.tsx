@@ -86,6 +86,7 @@ export const Register = () => {
         </div>
         <Button
           className="w-100"
+          color="primary"
           fullWidth={false}
           type="submit"
           isLoading={isLoading}

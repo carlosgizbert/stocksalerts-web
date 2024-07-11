@@ -34,10 +34,7 @@ export const AuthLayoutWrapper = ({ children }: Props) => {
         <div className='z-10'>
           <h1 className='font-bold text-[45px]'>ProStocks</h1>
           <div className='font-light text-slate-400 mt-4'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi
-            possimus voluptate, sapiente assumenda deserunt repellendus,
-            perferendis odit voluptas hic dolores laborum fugit ut? Architecto
-            quo ex quidem vitae quae rem.
+            Monitore ativos em tempo real
           </div>
         </div>
       </div>

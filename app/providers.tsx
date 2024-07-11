@@ -1,8 +1,9 @@
-"use client";
-import { NextUIProvider } from "@nextui-org/system";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { ThemeProviderProps } from "next-themes/dist/types";
-import { ReactQueryProvider } from "@/config/cache";
+'use client';
+import { NextUIProvider } from '@nextui-org/system';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { ThemeProviderProps } from 'next-themes/dist/types';
+import { ReactQueryProvider } from '@/config/cache';
+import { SessionProvider } from 'next-auth/react';
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -11,17 +12,18 @@ export interface ProvidersProps {
 
 export function Providers({ children, themeProps }: Readonly<ProvidersProps>) {
   return (
-    <NextUIProvider>
+    <SessionProvider>
+      <ReactQueryProvider>
       <NextThemesProvider
-        defaultTheme="system"
+        defaultTheme="light"
         attribute="class"
         {...themeProps}
       >
-        <ReactQueryProvider>
-
+        <NextUIProvider>
           {children}
-        </ReactQueryProvider>
+        </NextUIProvider>
       </NextThemesProvider>
-    </NextUIProvider>
+      </ReactQueryProvider>
+    </SessionProvider>
   );
 }

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@nextui-org/autocomplete": "^2.1.2",
     "@nextui-org/avatar": "^2.0.30",
     "@nextui-org/breadcrumbs": "^2.0.10",
@@ -35,14 +36,17 @@
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "feather-icons-react": "^0.7.0",
-    "formik": "^2.4.6",
     "framer-motion": "^10.18.0",
     "next": "^14.2.5",
+    "next-auth": "^4.24.7",
     "next-themes": "0.2.1",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-dom": "18.2.0",
-    "yup": "^1.4.0"
+    "react-hook-form": "^7.52.1",
+    "react-hot-toast": "^2.4.1",
+    "yup": "^1.4.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "18.7.18",

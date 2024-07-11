@@ -19,7 +19,7 @@ export const Content = () => {
         <div className="w-full h-full flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-semibold">Ativos monitorados</h3>
-            <Button as={Link} href="/stocks" variant="bordered" color="primary">
+            <Button as={Link} href="/panel/stocks" variant="bordered" color="primary">
               Ver todos
             </Button>
           </div>
