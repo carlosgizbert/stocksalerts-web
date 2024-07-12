@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
-  title: 'purple darkly - Crie feature flags e lance produtos',
+  title: 'StocksAlerts - Alerta de ações em tempo real',
   description: 'Feature flags',
 };
 
