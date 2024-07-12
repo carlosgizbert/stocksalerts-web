@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
-  title: 'ProStocks - Monitore seus ativos',
+  title: 'purple darkly - Crie feature flags e lance produtos',
   description: 'Feature flags',
 };
 

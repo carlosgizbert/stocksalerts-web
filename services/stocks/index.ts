@@ -9,8 +9,8 @@ import {
 } from "@tanstack/react-query";
 
 import { CACHE_QUERY_KEYS, QUERIES_CONFIG } from "..";
-import { createStock, getPriceEntries, getStocks } from "./api";
-import { CreateStockPayload, CreateStockResponse, GetPriceEntriesResponse, GetStocksResponse } from "./dto";
+import { createStock, deleteStock, getPriceEntries, getStocks } from "./api";
+import { CreateStockPayload, CreateStockResponse, DeleteStockPayload, GetPriceEntriesResponse, GetStocksResponse } from "./dto";
 
 import { MutateProps } from "../dto";
 
@@ -54,7 +54,36 @@ CreateStockResponse,
         onSuccess(data);
       }
       queryClient.invalidateQueries({
-        queryKey: [CACHE_QUERY_KEYS.useGetStocks],
+        queryKey: ['getStocks', 'getPriceEntries'],
+      });
+    },
+    onError: (error) => {
+      if (onError) {
+        onError(error);
+      }
+    },
+  });
+}
+
+export function useDeleteStock({
+  onError = () => null,
+  onSuccess = () => null,
+}: MutateProps): UseMutationResult<
+  any,
+  Error,
+  DeleteStockPayload,
+  unknown
+> {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id }) => deleteStock(id),
+    onSuccess: () => {
+      if (onSuccess) {
+        onSuccess();
+      }
+      queryClient.invalidateQueries({
+        queryKey: ['getStocks', 'getPriceEntries'],
       });
     },
     onError: (error) => {

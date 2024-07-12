@@ -23,6 +23,7 @@ import { Stock } from "@/models/stock";
 import FeatherIcon from "feather-icons-react";
 import { ChangeEvent, Key, useCallback, useMemo, useState } from "react";
 import { AddStock } from "@/components/stocks/add-stock";
+import { DeleteStock } from "@/components/stocks/delete-stock";
 
 const INITIAL_VISIBLE_COLUMNS = [
   "symbol",
@@ -68,6 +69,7 @@ export function StocksTable() {
     return filteredStocks;
   }, [data, filterValue, hasSearchFilter]);
 
+
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
   const items = useMemo(() => {
@@ -112,21 +114,10 @@ export function StocksTable() {
                 />
               </Button>
             </Tooltip>
-            <Tooltip color="danger" content="Excluir">
-              <Button
-                isIconOnly
-                color="danger"
-                variant="light"
-                onClick={() => null}
-              >
-                <FeatherIcon
-                  icon="trash"
-                  className="text-red-500"
-                  strokeWidth={1.5}
-                  size={20}
-                />
-              </Button>
-            </Tooltip>
+            <DeleteStock data={{
+              id: stock.id,
+              symbol: stock.symbol
+            }} />
           </div>
         );
       default:

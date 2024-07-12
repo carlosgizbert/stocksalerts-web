@@ -39,7 +39,7 @@ export default function Login() {
   return (
     <div className="w-full flex flex-col md:w-96">
       <div className="text-3xl font-bold">
-        Acessar Pro<span className="text-yellow-600">Stocks</span>
+        Acessar <span className="text-yellow-600">Stock</span>Alerts
       </div>
       <div className="flex flex-wrap gap-2 mt-3 mb-6">
         <p className="text-gray-400">não tem uma conta?</p>

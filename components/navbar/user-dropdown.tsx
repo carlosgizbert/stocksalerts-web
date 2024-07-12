@@ -1,3 +1,4 @@
+'use client';
 import {
   Avatar,
   Dropdown,
@@ -6,12 +7,12 @@ import {
   DropdownTrigger,
   NavbarItem,
 } from "@nextui-org/react";
+import { CACHE_QUERY_KEYS } from "@/services";
 import { DarkModeSwitch } from "./darkmodeswitch";
-import { useRouter } from "next/navigation";
 import { deleteCookie } from "cookies-next";
 import { signOut } from "next-auth/react";
-import { CACHE_QUERY_KEYS } from "@/services";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export const UserDropdown = () => {
   const queryClient = useQueryClient();

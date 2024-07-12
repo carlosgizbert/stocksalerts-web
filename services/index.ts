@@ -45,3 +45,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const formatPropertiesToQueryParams = (params: any) =>
+  `?${new URLSearchParams(params).toString()}`;

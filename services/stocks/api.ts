@@ -38,10 +38,10 @@ export async function createStock(payload: CreateStockPayload) {
 //   return data;
 // }
 
-// export async function deleteFlag(payload: DeleteFeatureFlagPayload) {
-//   const { data } = await api.delete(
-//     `${FLAGS_API_BASE_URL}/flags/auth/${payload.id}/`,
-//   );
+export async function deleteStock(id: string) {
+  const { data } = await api.delete(
+    `${FLAGS_API_BASE_URL}/stock/${id}`,
+  );
 
-//   return data;
-// }
+  return data;
+}

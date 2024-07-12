@@ -3,87 +3,96 @@ import React, { useMemo } from "react";
 import Chart, { Props } from "react-apexcharts";
 
 const baseOptions: Props["options"] = {
-  series: [
-    {
-      name: "High - 2013",
-      data: [28, 29, 33, 36, 32, 32, 33],
-    },
-    {
-      name: "Low - 2013",
-      data: [12, 11, 14, 18, 17, 13, 13],
-    },
-  ],
   chart: {
-    height: 350,
     type: "line",
-    dropShadow: {
-      enabled: true,
-      color: "#000",
-      top: 18,
-      left: 7,
-      blur: 10,
-      opacity: 0.2,
+    animations: {
+      easing: "linear",
+      speed: 300,
     },
-    zoom: {
+    sparkline: {
       enabled: false,
     },
+    brush: {
+      enabled: false,
+    },
+    id: "basic-bar",
+    foreColor: "hsl(var(--nextui-default-800))",
+    stacked: true,
     toolbar: {
       show: false,
     },
   },
-  colors: ["#77B6EA", "#545454"],
-  dataLabels: {
+  xaxis: {
+    type: "datetime",
+    labels: {
+      style: {
+        colors: "hsl(var(--nextui-default-800))",
+      },
+      format: "HH:mm:ss", // Exibir apenas a hora no formato HH:mm:ss
+    },
+    axisBorder: {
+      color: "hsl(var(--nextui-nextui-default-200))",
+    },
+    axisTicks: {
+      color: "hsl(var(--nextui-nextui-default-200))",
+    },
+  },
+  yaxis: {
+    labels: {
+      style: {
+        colors: "hsl(var(--nextui-default-800))",
+      },
+    },
+  },
+  tooltip: {
     enabled: true,
+    x: {
+      format: "HH:mm:ss", // Exibir apenas a hora no formato HH:mm:ss
+    },
+  },
+  grid: {
+    show: true,
+    borderColor: "hsl(var(--nextui-default-200))",
+    strokeDashArray: 0,
+    position: "back",
   },
   stroke: {
     curve: "smooth",
-  },
-  title: {
-    text: "Average High & Low Temperature",
-    align: "left",
-  },
-  grid: {
-    borderColor: "#e7e7e7",
-    row: {
-      colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-      opacity: 0.5,
+    fill: {
+      colors: ["#34D399"],
     },
   },
   markers: {
-    size: 1,
-  },
-  yaxis: {
-    title: {
-      text: "Temperature",
+    size: 4,
+    colors: ["#34D399"],
+    strokeColors: "#fff",
+    strokeWidth: 2,
+    hover: {
+      size: 7,
     },
-    min: 5,
-    max: 40,
   },
-  legend: {
-    position: "top",
-    horizontalAlign: "right",
-    floating: true,
-    offsetY: -25,
-    offsetX: -5,
+  title: {
+    text: "Open Price Trends",
+    align: "left",
   },
 };
 
 export const Steam = () => {
   const { data: priceEntriesData } = useGetPriceEntries();
 
+  // Transformar os dados de priceEntriesData para o formato esperado pelo gráfico
   const seriesData = useMemo(() => {
-
     if (!priceEntriesData) return [];
 
-    const data = priceEntriesData.map((entry) => ({
-      x: new Date(entry.created_at),
-      y: parseFloat(entry.open_price),
-      symbol: entry.stock.symbol
+    const data = priceEntriesData.map(entry => ({
+      x: new Date(entry.created_at).getTime(), // Converter para milissegundos
+      y: parseFloat(entry.open_price), // Converter para número
+      symbol: entry.stock.symbol,
     }));
 
     return [
       {
-        name: "Close Prices",
+        name: "Open Prices",
         data,
       },
     ];
@@ -92,25 +101,16 @@ export const Steam = () => {
   const chartOptions = useMemo(() => {
     return {
       ...baseOptions,
-      xaxis: {
-        ...baseOptions.xaxis,
-        categories: priceEntriesData
-          ? priceEntriesData.map((entry) => entry.created_at)
-          : [],
-      },
     };
-  }, [priceEntriesData]);
+  }, []);
 
   return (
     <div className="w-full z-20">
       <div id="chart">
-        <Chart
-          options={chartOptions}
-          series={seriesData}
-          type="area"
-          height={425}
-        />
+        <Chart options={chartOptions} series={seriesData} type="line" height={425} />
       </div>
     </div>
   );
 };
+
+export default Steam;

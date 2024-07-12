@@ -1,4 +1,4 @@
-import React from "react";
+'use client';
 import { PriceEntries } from "@/components/priceEntries";
 
 const priceEntries = () => {

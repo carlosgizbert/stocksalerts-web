@@ -12,3 +12,7 @@ export interface CreateStockPayload {
 export interface CreateStockResponse extends Stock {}
 
 export interface GetPriceEntriesResponse extends PriceEntry {}
+
+export interface DeleteStockPayload {
+  id: string
+}
