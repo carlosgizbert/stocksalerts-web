@@ -83,6 +83,7 @@ export const AddStock = () => {
                   placeholder="Insira o limite"
                   size="lg"
                   variant="faded"
+                  type="number"
                   min={0}
                   errorMessage={errors.lower_tunnel_limit?.message}
                   isInvalid={!!errors.lower_tunnel_limit?.message}
@@ -92,6 +93,7 @@ export const AddStock = () => {
                   label="Limite máximo"
                   placeholder="Insira o limite"
                   size="lg"
+                  type="number"
                   variant="faded"
                   min={0}
                   errorMessage={errors.upper_tunnel_limit?.message}
@@ -104,6 +106,7 @@ export const AddStock = () => {
                 placeholder=""
                 size="lg"
                 min={1}
+                type="number"
                 variant="faded"
                 errorMessage={errors.check_frequency?.message}
                 isInvalid={!!errors.check_frequency?.message}
