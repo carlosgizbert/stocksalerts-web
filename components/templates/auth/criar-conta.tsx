@@ -50,7 +50,7 @@ export const Register = () => {
         Criar conta <span className="text-success-600">grátis</span>
       </div>
       <div className="flex gap-2 mt-3 mb-6">
-        <p className="text-gray-600">já possui conta?</p>
+        <p className="text-gray-400">já possui conta?</p>
         <Link className="font-bold text-success-600 hover:underline" href="/">
           entre aqui
         </Link>
