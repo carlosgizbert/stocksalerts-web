@@ -35,13 +35,13 @@ export const SidebarWrapper = () => {
             />
               <SidebarItem
                 isActive={pathname === "/panel/stocks"}
-                title="Ativos monitorados"
+                title="Ativos"
                 icon={<FeatherIcon icon="layers" size={18} strokeWidth={1.5} />}
                 href="/panel/stocks"
               />
               <SidebarItem
                 isActive={pathname === "/panel/price-entries"}
-                title="Histórico de preços"
+                title="Histórico"
                 icon={
                   <FeatherIcon icon="activity" size={18} strokeWidth={1.5} />
                 }
