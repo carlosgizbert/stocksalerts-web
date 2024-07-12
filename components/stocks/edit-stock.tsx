@@ -14,10 +14,9 @@ import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useEditStock } from "@/services/stocks";
-import { CreateStockPayload } from "@/services/stocks/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createStockSchema } from "./schema";
 import { Stock } from "@/models/stock";
+import { EditStockFormType, editStockSchema } from "@/helpers/schemas/stocks";
 
 interface EditStockProps {
   data: Stock;
@@ -25,16 +24,16 @@ interface EditStockProps {
 
 export const EditStock = ({ data }: EditStockProps) => {
   const { id } = data;
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
     register,
-    handleSubmit,
     setValue,
+    handleSubmit,
     formState: { errors },
-  } = useForm<CreateStockPayload>({ 
-    
+  } = useForm<EditStockFormType>({
+    mode: "onChange",
+    resolver: zodResolver(editStockSchema),
   });
 
   const {
@@ -52,20 +51,22 @@ export const EditStock = ({ data }: EditStockProps) => {
     id,
   });
 
-  const onSubmit = (formData: CreateStockPayload) => {
-    console.log({ formData });
+  const onSubmit = (formData: EditStockFormType) => {
     editStock({
       id,
-      ...formData,
+      symbol: formData.symbol,
+      check_frequency: Number(formData.check_frequency),
+      lower_tunnel_limit: Number(formData.lower_tunnel_limit),
+      upper_tunnel_limit: Number(formData.upper_tunnel_limit),
     });
   };
 
   useEffect(() => {
     if (data) {
       setValue('symbol', data.symbol);
-      setValue('check_frequency', data.check_frequency);
-      setValue('lower_tunnel_limit', data.lower_tunnel_limit);
-      setValue('upper_tunnel_limit', data.upper_tunnel_limit);
+      setValue('check_frequency', String(data.check_frequency));
+      setValue('lower_tunnel_limit',  String(data.lower_tunnel_limit));
+      setValue('upper_tunnel_limit', String(data.upper_tunnel_limit));
     }
   }, [data, setValue]);
 
@@ -88,30 +89,46 @@ export const EditStock = ({ data }: EditStockProps) => {
             </ModalHeader>
             <ModalBody>
               <Input
-                {...register("symbol")}
                 label="Símbolo"
+                placeholder="Digite o símbolo ex: AMER3.SA"
+                size="lg"
+                type="text"
+                min={0}
                 variant="faded"
-                placeholder="MGLU3.SA"
                 errorMessage={errors.symbol?.message}
+                isInvalid={!!errors.symbol?.message}
+                {...register("symbol")}
               />
+              <div className="flex gap-2">
+                <Input
+                  label="Limite mínimo"
+                  placeholder="Insira o limite"
+                  size="lg"
+                  variant="faded"
+                  min={0}
+                  errorMessage={errors.lower_tunnel_limit?.message}
+                  isInvalid={!!errors.lower_tunnel_limit?.message}
+                  {...register("lower_tunnel_limit")}
+                />
+                <Input
+                  label="Limite máximo"
+                  placeholder="Insira o limite"
+                  size="lg"
+                  variant="faded"
+                  min={0}
+                  errorMessage={errors.upper_tunnel_limit?.message}
+                  isInvalid={!!errors.upper_tunnel_limit?.message}
+                  {...register("upper_tunnel_limit")}
+                />
+              </div>
               <Input
-                {...register("lower_tunnel_limit")}
-                label="Limite mínimo"
-                variant="faded"
-                errorMessage={errors.lower_tunnel_limit?.message}
-              />
-              <Input
-                {...register("upper_tunnel_limit")}
-                label="Limite máximo"
-                variant="faded"
-                errorMessage={errors.upper_tunnel_limit?.message}
-              />
-              <Input
-                {...register("check_frequency")}
-                label="Frequência da verificação (em minutos)"
-                type="number"
+                label="Frequência de checagem (em minutos)"
+                placeholder=""
+                size="lg"
                 variant="faded"
                 errorMessage={errors.check_frequency?.message}
+                isInvalid={!!errors.check_frequency?.message}
+                {...register("check_frequency")}
               />
             </ModalBody>
             <ModalFooter>

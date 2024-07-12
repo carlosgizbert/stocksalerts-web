@@ -1,4 +1,3 @@
-
 import {
   Button,
   Input,
@@ -14,9 +13,11 @@ import React from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useCreateStock } from "@/services/stocks";
-import { CreateStockPayload } from "@/services/stocks/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createStockSchema } from "./schema";
+import {
+  CreateStockFormType,
+  createStockSchema,
+} from "@/helpers/schemas/stocks";
 
 export const AddStock = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -24,21 +25,28 @@ export const AddStock = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateStockPayload>({
+  } = useForm<CreateStockFormType>({
+    mode: "onChange",
+    resolver: zodResolver(createStockSchema),
   });
+
   const { mutate: createStock, isPending: isLoading } = useCreateStock({
     onSuccess: (stock) => {
       toast.success(<p>{stock.symbol} Cadastrado com sucesso</p>);
       onClose();
     },
-    onError: (e) => toast.error(<p>Erro! Tente novamente. {e.message}</p>),
+    onError: (e: any) => {
+      console.log({ e })
+      toast.error(<p>Erro! {e.response.data.symbol[0]}</p>)
+    },
   });
 
-  const onSubmit = (formData: CreateStockPayload) => {
-    console.log({ formData })
+  const onSubmit = (formData: CreateStockFormType) => {
     createStock({
-      ...formData,
-      description: '',
+      symbol: formData.symbol,
+      check_frequency: Number(formData.check_frequency),
+      lower_tunnel_limit: Number(formData.lower_tunnel_limit),
+      upper_tunnel_limit: Number(formData.upper_tunnel_limit),
     });
   };
 
@@ -60,30 +68,46 @@ export const AddStock = () => {
             </ModalHeader>
             <ModalBody>
               <Input
-                {...register("symbol")}
                 label="Símbolo"
+                placeholder="Digite o símbolo ex: AMER3.SA"
+                size="lg"
+                type="text"
                 variant="faded"
-                placeholder="Por exemplo, MGLU3.SA"
                 errorMessage={errors.symbol?.message}
+                isInvalid={!!errors.symbol?.message}
+                {...register("symbol")}
               />
+              <div className="flex gap-2">
+                <Input
+                  label="Limite mínimo"
+                  placeholder="Insira o limite"
+                  size="lg"
+                  variant="faded"
+                  min={0}
+                  errorMessage={errors.lower_tunnel_limit?.message}
+                  isInvalid={!!errors.lower_tunnel_limit?.message}
+                  {...register("lower_tunnel_limit")}
+                />
+                <Input
+                  label="Limite máximo"
+                  placeholder="Insira o limite"
+                  size="lg"
+                  variant="faded"
+                  min={0}
+                  errorMessage={errors.upper_tunnel_limit?.message}
+                  isInvalid={!!errors.upper_tunnel_limit?.message}
+                  {...register("upper_tunnel_limit")}
+                />
+              </div>
               <Input
-                {...register("lower_tunnel_limit")}
-                label="Limite mínimo"
-                variant="faded"
-                errorMessage={errors.lower_tunnel_limit?.message}
-              />
-              <Input
-                {...register("upper_tunnel_limit")}
-                label="Limite máximo"
-                variant="faded"
-                errorMessage={errors.upper_tunnel_limit?.message}
-              />
-              <Input
-                {...register("check_frequency")}
-                label="Frequência da verificação (em minutos)"
-                type="number"
+                label="Frequência de checagem (em minutos)"
+                placeholder=""
+                size="lg"
+                min={1}
                 variant="faded"
                 errorMessage={errors.check_frequency?.message}
+                isInvalid={!!errors.check_frequency?.message}
+                {...register("check_frequency")}
               />
             </ModalBody>
             <ModalFooter>

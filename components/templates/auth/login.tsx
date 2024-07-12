@@ -1,7 +1,6 @@
 'use client';
 
-import { loginFormSchema } from '@/helpers/schemas/login';
-import { LoginFormType } from '@/helpers/types';
+import { loginFormSchema, LoginFormType } from '@/helpers/schemas/login';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, Link } from '@nextui-org/react';
 import { signIn } from 'next-auth/react';

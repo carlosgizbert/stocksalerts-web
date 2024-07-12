@@ -22,7 +22,7 @@ export const UserDropdown = () => {
     await signOut({
       redirect: false,
     });
-    deleteCookie("@auth:jwt")
+    deleteCookie("@auth:stockJwt")
     await queryClient.invalidateQueries({
       queryKey: Object.values(CACHE_QUERY_KEYS),
     });

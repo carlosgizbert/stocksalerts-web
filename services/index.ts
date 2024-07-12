@@ -24,7 +24,7 @@ export const api = axios.create({
   },
 });
 
-const getAccessToken = () => getCookie('@auth:jwt') ?? '';
+const getAccessToken = () => getCookie('@auth:stockJwt') ?? '';
 
 api.interceptors.request.use((config) => {
   const accessToken = getAccessToken();

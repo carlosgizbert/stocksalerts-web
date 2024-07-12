@@ -23,7 +23,7 @@ export const nextAuthOptions: NextAuthOptions = {
           });
 
           if (response.data && response.status === 200) {
-            cookies().set('@auth:jwt', response.data.access);
+            cookies().set('@auth:stockJwt', response.data.access);
 
             return {
               ...response.data,

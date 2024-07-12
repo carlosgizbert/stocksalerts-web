@@ -40,7 +40,7 @@ export async function editStock(payload: EditStockPayload) {
   } = payload
 
   const { data } = await api.patch(
-    `${FLAGS_API_BASE_URL}/stock/${id}`,
+    `${FLAGS_API_BASE_URL}/stock/${id}/`,
     {
       check_frequency,
       lower_tunnel_limit,
@@ -55,7 +55,7 @@ export async function editStock(payload: EditStockPayload) {
 
 export async function deleteStock(id: string) {
   const { data } = await api.delete(
-    `${FLAGS_API_BASE_URL}/stock/${id}`,
+    `${FLAGS_API_BASE_URL}/stock/${id}/`,
   );
 
   return data;

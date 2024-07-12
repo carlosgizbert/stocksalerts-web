@@ -4,10 +4,9 @@ import { Stock } from "@/models/stock";
 export interface GetStocksResponse extends Stock {}
 export interface CreateStockPayload {
   symbol: string
-  description: string
-  lower_tunnel_limit: string
-  upper_tunnel_limit: string
-  check_frequency: string
+  lower_tunnel_limit: number
+  upper_tunnel_limit: number
+  check_frequency: number
 }
 export interface CreateStockResponse extends Stock {}
 
@@ -20,7 +19,7 @@ export interface DeleteStockPayload {
 export interface EditStockPayload {
   id: string
   symbol?: string
-  lower_tunnel_limit: string
-  upper_tunnel_limit: string
-  check_frequency: string
+  lower_tunnel_limit: number
+  upper_tunnel_limit: number
+  check_frequency: number
 }
