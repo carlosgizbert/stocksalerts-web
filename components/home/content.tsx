@@ -4,6 +4,7 @@ import { StocksTable } from "../tables/stock/table";
 import { Button, Divider } from "@nextui-org/react";
 import Link from "next/link";
 import { PriceEntryTable } from "../tables/priceEntry/table";
+import FeatherIcon from "feather-icons-react";
 
 const Chart = dynamic(
   () => import("../charts/steam").then((mod) => mod.Steam),
@@ -14,31 +15,50 @@ const Chart = dynamic(
 
 export const Content = () => {
   return (
-    <div className="h-full lg:px-6">
-      <div className="flex pt-4 justify-center gap-4 xl:gap-6 px-4 lg:px-0 flex-wrap xl:flex-nowrap sm:pt-8 max-w-[90rem] mx-auto w-full">
-        <div className="w-full h-full flex flex-col gap-2">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xl font-semibold">Ativos monitorados</h3>
-            <Button as={Link} href="/panel/stocks" variant="bordered" color="primary">
-              Ver todos
-            </Button>
-          </div>
-          {/* <div className="w-full bg-default-50 shadow-lg rounded-2xl p-6 ">
+    <div className="lg:px-6">
+      <section className="py-4">
+        <div className="flex w-full items-center gap-4 lg:px-0 sm:pt-4 max-w-[90rem] mx-auto">
+          <h3 className="text-xl flex items-center gap-2 font-semibold">
+            <FeatherIcon icon="activity" size={18} strokeWidth={1.5} />
+            Últimos preços verificados</h3>
+          <Button
+            as={Link}
+            href="/panel/price-entries"
+            variant="bordered"
+            color="primary"
+          >
+            Ver todos
+          </Button>
+        </div>
+        <div className="flex w-full items-center  gap-4 lg:px-0 max-w-[90rem] mx-auto">
+          <div className="w-full">
             <Chart />
-          </div> */}
+          </div>
+          <div className="w-full">
+            <PriceEntryTable />
+          </div>
         </div>
-        <div className="flex flex-col justify-center w-full py-5 px-4 lg:px-0  max-w-[90rem] mx-auto gap-3">
-        <StocksTable />
-        </div>
-      </div>
-      <div className="flex flex-col justify-center gap-4 xl:gap-6 px-4 lg:px-0 flex-wrap xl:flex-nowrap sm:pt-10 max-w-[90rem] mx-auto w-full">
+      </section>
+      <Divider />
+      <section className="py-4">
         <div className="flex items-center gap-4">
-          <h3 className="text-xl font-semibold">Últimos preços verificados</h3>
+          <h3 className="text-xl font-semibold flex items-center gap-2">
+            <FeatherIcon icon="layers" size={18} strokeWidth={1.5} /> Ativos
+            monitorados
+          </h3>
+          <Button
+            as={Link}
+            href="/panel/stocks"
+            variant="bordered"
+            color="primary"
+          >
+            Ver todos
+          </Button>
         </div>
-        <div className="flex flex-col justify-center w-full px-4 lg:px-0  max-w-[90rem] mx-auto gap-3">
-          <PriceEntryTable />
+        <div className="flex w-full items-center  gap-4 pt-4 lg:px-0 sm:pt-8 max-w-[90rem] mx-auto">
+          <StocksTable />
         </div>
-      </div>
+      </section>
     </div>
   );
 };

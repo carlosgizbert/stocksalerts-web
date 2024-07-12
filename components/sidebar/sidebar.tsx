@@ -31,7 +31,7 @@ export const SidebarWrapper = () => {
               title="Início"
               icon={<FeatherIcon icon="home" size={18} strokeWidth={1.5} />}
               isActive={pathname === "/panel"}
-              href="/"
+              href="/panel"
             />
               <SidebarItem
                 isActive={pathname === "/panel/stocks"}
