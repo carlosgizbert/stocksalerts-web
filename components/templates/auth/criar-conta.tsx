@@ -1,7 +1,6 @@
 'use client';
 
-import { registerFormSchema } from '@/helpers/schemas/register';
-import { RegisterFormType } from '@/helpers/types';
+import { registerFormSchema, RegisterFormType } from '@/helpers/schemas/register';
 import { useCreateAccount } from '@/services/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, Link } from '@nextui-org/react';
