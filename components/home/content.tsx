@@ -20,14 +20,14 @@ export const Content = () => {
         <div className="flex w-full items-center gap-4 lg:px-0 sm:pt-4 max-w-[90rem] mx-auto">
           <h3 className="text-xl flex items-center gap-2 font-semibold">
             <FeatherIcon icon="activity" size={18} strokeWidth={1.5} />
-            Últimos preços verificados</h3>
+            Últimos preços</h3>
           <Button
             as={Link}
             href="/panel/price-entries"
             variant="bordered"
             color="primary"
           >
-            Ver todos
+            ver todos
           </Button>
         </div>
         <div className="flex w-full items-center  gap-4 lg:px-0 max-w-[90rem] mx-auto">
@@ -43,8 +43,7 @@ export const Content = () => {
       <section className="py-4">
         <div className="flex items-center gap-4">
           <h3 className="text-xl font-semibold flex items-center gap-2">
-            <FeatherIcon icon="layers" size={18} strokeWidth={1.5} /> Ativos
-            monitorados
+            <FeatherIcon icon="activity" size={18} strokeWidth={1.5} /> Histórico de preços
           </h3>
           <Button
             as={Link}
@@ -52,7 +51,7 @@ export const Content = () => {
             variant="bordered"
             color="primary"
           >
-            Ver todos
+            Configurar
           </Button>
         </div>
         <div className="flex w-full items-center  gap-4 pt-4 lg:px-0 sm:pt-8 max-w-[90rem] mx-auto">
