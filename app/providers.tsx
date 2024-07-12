@@ -15,7 +15,7 @@ export function Providers({ children, themeProps }: Readonly<ProvidersProps>) {
     <SessionProvider>
       <ReactQueryProvider>
       <NextThemesProvider
-        defaultTheme="light"
+        defaultTheme="dark"
         attribute="class"
         {...themeProps}
       >
