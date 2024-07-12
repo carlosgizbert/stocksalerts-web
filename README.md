@@ -1,71 +1,25 @@
-# NextJS and NextUI Dashboard Template Starter
+### StocksAlerts
 
-You can deploy here directly to vercel [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/Siumauricio/nextui-dashboard-template)
+### objetivo da aplicação
+Cadastrar, alterar e excluir ativos e rastrealos com base no valor minimo e máximo por tempo determinado pelo usuário para verificação dos preços de cada ativo
 
+### desenvolvido
+* ✔️ cadastro usuário
+* ✔️ notificações de sugestão de compras e vendas por email
+* ✔️ autenticação do usuário via jwt
+* ✔️ cadastro/edição/exclusão de ativos
+* ✔️ historico de preços dos ativos em tempo real
 
-V1 Version Stitches https://v1-nextui-dashboard-template.vercel.app/
-V1 Code: https://github.com/Siumauricio/nextui-dashboard-template/tree/v1
+### principais tecnologias
+* <a href="https://nextjs.org/" about="_blank">Nextjs</a> (Django SimpleJWT para autenticação)
+* <a href="https://next-auth.js.org/" about="_blank">NextAuth</a> (Autenticação)
+* <a href="https://nextui.org/" about="_blank">NextUI (UI)</a> (+ tailwindcss)
 
-This is a template for NextJS and NextUI.
+### resultado
+#### <a href="https://stocksalerts-web.vercel.app/" target="_blank">`www.stocksalerts-web.vercel.app`</a>
 
-[NextJS](https://nextjs.org/)
-[NextUI](https://nextui.org/)
+### como rodar
+Após clonar o projeto, através do terminal, entre na pasta do projeto e rode os comandos abaixo
+###### `1. `
+###### `2. `
 
-You can see the demo here: https://nextui-dashboard-template.vercel.app/
-For improve this template, you can create a pull request or open an issue here [Issues](https://github.com/Siumauricio/nextui-dashboard-template/issues) or [Pull Request](
-    https://github.com/Siumauricio/nextui-dashboard-template/pulls)
-
-### Dark Mode
-![Dashboard Dark Mode](./public/dark.png)
-
-### Light Mode
-![Dashboard Light Mode](./public/light.png)
-
-
-- Dark Mode Support
-- Full Responsive
-- Home Page with Charts
-- Accounts Page
-- More pages coming soon...
-
-```
-├── components
-│   ├── accounts            # Accounts components
-│   ├── charts              # Charts components
-│   ├── breadcrumb          # component
-|   ├── home                # Home components
-|   ├── layout              # Layout components
-|   ├── navbar              # Navbar components
-|   ├── sidebar             # Sidebar components
-|   ├── table               # Table components
-|   ├── styles              # Some reusable components
-|   ├── icons               # Icons
-|   ├── hooks               # Hooks
-├── app                     # Documentation files
-│   ├── accounts            # Accounts route
-|       ├── page.tsx        # Accounts page
-│   ├── page.tsx            # Entry point for the app
-│   ├── layout.tsx          # Layout applied to all application pages
-│   ├── providers.tsx       # Theme provider
-│   ├── more...             # Soon
-└──
-```
-
-## For Run
-
-Install dependencies
-
-
-```bash
-npm install
-```
-
-Start the server
-
-
-
-```bash
-npm run dev
-```
-
-Now you can visit https://localhost:3000 in your browser.
