@@ -11,6 +11,7 @@ Cadastrar, alterar e excluir ativos e rastrealos com base no valor minimo e máx
 * ✔️ historico de preços dos ativos em tempo real
 
 ### principais tecnologias
+* <a href="[https://nextjs.org/](https://bun.sh/)" about="_blank">Bun</a> (Runtime javascript)
 * <a href="https://nextjs.org/" about="_blank">Nextjs</a> (React Framework)
 * <a href="https://next-auth.js.org/" about="_blank">NextAuth</a> (Autenticação)
 * <a href="https://nextui.org/" about="_blank">NextUI (UI)</a> (+ tailwindcss)
@@ -20,6 +21,6 @@ Cadastrar, alterar e excluir ativos e rastrealos com base no valor minimo e máx
 
 ### como rodar
 Após clonar o projeto, através do terminal, entre na pasta do projeto e rode os comandos abaixo
-###### `1. `
-###### `2. `
+###### `1. bun install`
+###### `2. bun run dev`
 
