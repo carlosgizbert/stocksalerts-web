@@ -34,7 +34,7 @@ export const Content = () => {
           <div className="w-full">
             <Chart />
           </div>
-          <div className="w-full">
+          <div className="w-full h-full">
             <PriceEntryTable />
           </div>
         </div>
@@ -54,7 +54,7 @@ export const Content = () => {
             Configurar
           </Button>
         </div>
-        <div className="flex w-full items-center  gap-4 pt-4 lg:px-0 sm:pt-8 max-w-[90rem] mx-auto">
+        <div className="flex w-full items-center  gap-4 lg:px-0 sm:pt-8 max-w-[90rem] mx-auto">
           <StocksTable />
         </div>
       </section>
