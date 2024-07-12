@@ -2,6 +2,7 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import axios from 'axios';
 import { cookies } from 'next/headers';
+import { BASE_API_URL } from '@/services';
 
 export const nextAuthOptions: NextAuthOptions = {
   providers: [
@@ -17,7 +18,7 @@ export const nextAuthOptions: NextAuthOptions = {
         }
 
         try {
-          const response = await axios.post('http://localhost:8000/token/', {
+          const response = await axios.post(BASE_API_URL, {
             username: credentials.username,
             password: credentials.password,
           });
