@@ -1,8 +1,9 @@
-"use client"
-
+import { authJwtKey } from '@/utils/constants';
 import axios, { AxiosError } from 'axios';
 import { getCookie } from 'cookies-next';
 import { signOut } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 export const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL ?? 'http://localhost:8000';
 
@@ -26,9 +27,8 @@ export const api = axios.create({
   },
 });
 
-const getAccessToken = () => getCookie('@auth:stockJwt') ?? '';
-
 api.interceptors.request.use((config) => {
+  const getAccessToken = () => getCookie(authJwtKey) ?? '';
   const accessToken = getAccessToken();
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -41,8 +41,10 @@ api.interceptors.response.use(
   async (error: AxiosError) => {
     const { response } = error;
     if (response && response.status === 401) {
+      await signOut({ redirect: false });
       console.error("Logging out due to 401 error");
-      await signOut({ redirect: true, callbackUrl: "/" });
+      toast.error('Credenciais expiradas. Por favor entre novamente.')
+      redirect('/')
     }
     return Promise.reject(error);
   }

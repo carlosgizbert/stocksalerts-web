@@ -39,22 +39,19 @@ export const EditStock = ({ data }: EditStockProps) => {
   const {
     mutate: editStock,
     isPending: isLoading,
-    isError: isError,
   } = useEditStock({
     onSuccess: () => {
       toast.success(<span>Ativo atualizado</span>);
     },
-    onError: (error) =>
-      toast.error(
-        <span>Erro! Por favor tente novamente. {error.message}</span>
-      ),
+    onError: (error: any) =>
+      toast.error(<p>Erro! {error.response.data.symbol[0]}</p>),
     id,
   });
 
   const onSubmit = (formData: EditStockFormType) => {
     editStock({
       id,
-      symbol: formData.symbol,
+      ...(formData.symbol !== data.symbol && { symbol: formData.symbol}),
       check_frequency: Number(formData.check_frequency),
       lower_tunnel_limit: Number(formData.lower_tunnel_limit),
       upper_tunnel_limit: Number(formData.upper_tunnel_limit),
@@ -85,7 +82,7 @@ export const EditStock = ({ data }: EditStockProps) => {
         <ModalContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalHeader className="flex flex-col gap-1">
-              Cadastrar ativo
+              Editar ativo
             </ModalHeader>
             <ModalBody>
               <Input
@@ -125,6 +122,8 @@ export const EditStock = ({ data }: EditStockProps) => {
                 label="Frequência de checagem (em minutos)"
                 placeholder=""
                 size="lg"
+                min="1"
+                type="number"
                 variant="faded"
                 errorMessage={errors.check_frequency?.message}
                 isInvalid={!!errors.check_frequency?.message}

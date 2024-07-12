@@ -13,6 +13,7 @@ import { deleteCookie } from "cookies-next";
 import { signOut } from "next-auth/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { authJwtKey } from '@/utils/constants'
 
 export const UserDropdown = () => {
   const queryClient = useQueryClient();
@@ -22,7 +23,7 @@ export const UserDropdown = () => {
     await signOut({
       redirect: false,
     });
-    deleteCookie("@auth:stockJwt")
+    deleteCookie(authJwtKey)
     await queryClient.invalidateQueries({
       queryKey: Object.values(CACHE_QUERY_KEYS),
     });

@@ -35,9 +35,8 @@ export const AddStock = () => {
       toast.success(<p>{stock.symbol} Cadastrado com sucesso</p>);
       onClose();
     },
-    onError: (e: any) => {
-      console.log({ e })
-      toast.error(<p>Erro! {e.response.data.symbol[0]}</p>)
+    onError: (error: any) => {
+      toast.error(<p>Erro! {error.response.data.symbol[0]}</p>)
     },
   });
 

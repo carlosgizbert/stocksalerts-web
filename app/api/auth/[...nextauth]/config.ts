@@ -1,8 +1,9 @@
+import { BASE_API_URL } from '@/services';
+import { authJwtKey } from '@/utils/constants';
+import axios from 'axios';
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import axios from 'axios';
 import { cookies } from 'next/headers';
-import { BASE_API_URL } from '@/services';
 
 export const nextAuthOptions: NextAuthOptions = {
   providers: [
@@ -12,20 +13,19 @@ export const nextAuthOptions: NextAuthOptions = {
         username: { label: 'Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials) {
           return null;
         }
 
         try {
-          const response = await axios.post(BASE_API_URL, {
+          const response = await axios.post(BASE_API_URL + '/token/', {
             username: credentials.username,
             password: credentials.password,
           });
 
           if (response.data && response.status === 200) {
-            cookies().set('@auth:stockJwt', response.data.access);
-
+            cookies().set(authJwtKey, response.data.access);
             return {
               ...response.data,
             };
