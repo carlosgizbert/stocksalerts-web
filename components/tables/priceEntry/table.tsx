@@ -111,11 +111,11 @@ export function PriceEntryTable() {
       case "actions":
         return (
           <div className="relative flex justify-end">
-            <Tooltip color="primary" content="Editar">
-              <Button isIconOnly color="primary" variant="light">
+            <Tooltip color="success" content="Editar">
+              <Button isIconOnly color="success" variant="light">
                 <FeatherIcon
                   icon="edit-3"
-                  className="text-primary-500"
+                  className="text-success-500"
                   strokeWidth={1.5}
                   size={20}
                 />
@@ -256,7 +256,7 @@ export function PriceEntryTable() {
           isCompact
           showControls
           showShadow
-          color="primary"
+          color="success"
           page={page}
           total={pages}
           onChange={setPage}

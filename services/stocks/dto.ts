@@ -16,3 +16,11 @@ export interface GetPriceEntriesResponse extends PriceEntry {}
 export interface DeleteStockPayload {
   id: string
 }
+
+export interface EditStockPayload {
+  id: string
+  symbol?: string
+  lower_tunnel_limit: string
+  upper_tunnel_limit: string
+  check_frequency: string
+}

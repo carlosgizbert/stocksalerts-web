@@ -14,7 +14,6 @@ import {
   Pagination,
   Selection,
   SortDescriptor,
-  Tooltip,
 } from "@nextui-org/react";
 import { columns } from "./data";
 import { capitalize } from "./utils";
@@ -24,6 +23,7 @@ import FeatherIcon from "feather-icons-react";
 import { ChangeEvent, Key, useCallback, useMemo, useState } from "react";
 import { AddStock } from "@/components/stocks/add-stock";
 import { DeleteStock } from "@/components/stocks/delete-stock";
+import { EditStock } from "@/components/stocks/edit-stock";
 
 const INITIAL_VISIBLE_COLUMNS = [
   "symbol",
@@ -95,7 +95,7 @@ export function StocksTable() {
     switch (columnKey) {
       case "symbol":
         return (
-          <span className="font-semibold text-primary-500">{stock.symbol}</span>
+          <span className="font-semibold">{stock.symbol}</span>
         );
       case "lower_tunnel_limit":
         return <span>R${stock.lower_tunnel_limit}</span>;
@@ -104,16 +104,7 @@ export function StocksTable() {
       case "actions":
         return (
           <div className="relative flex justify-end">
-            <Tooltip color="primary" content="Editar">
-              <Button isIconOnly color="primary" variant="light">
-                <FeatherIcon
-                  icon="edit-3"
-                  className="text-primary-500"
-                  strokeWidth={1.5}
-                  size={20}
-                />
-              </Button>
-            </Tooltip>
+            <EditStock data={stock} />
             <DeleteStock data={{
               id: stock.id,
               symbol: stock.symbol
@@ -239,7 +230,7 @@ export function StocksTable() {
           isCompact
           showControls
           showShadow
-          color="primary"
+          color="success"
           page={page}
           total={pages}
           onChange={setPage}

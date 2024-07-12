@@ -9,8 +9,8 @@ import {
 } from "@tanstack/react-query";
 
 import { CACHE_QUERY_KEYS, QUERIES_CONFIG } from "..";
-import { createStock, deleteStock, getPriceEntries, getStocks } from "./api";
-import { CreateStockPayload, CreateStockResponse, DeleteStockPayload, GetPriceEntriesResponse, GetStocksResponse } from "./dto";
+import { createStock, deleteStock, editStock, getPriceEntries, getStocks } from "./api";
+import { CreateStockPayload, CreateStockResponse, DeleteStockPayload, EditStockPayload, GetPriceEntriesResponse, GetStocksResponse } from "./dto";
 
 import { MutateProps } from "../dto";
 
@@ -56,6 +56,7 @@ CreateStockResponse,
       queryClient.invalidateQueries({
         queryKey: ['getStocks', 'getPriceEntries'],
       });
+      queryClient.refetchQueries()
     },
     onError: (error) => {
       if (onError) {
@@ -85,6 +86,41 @@ export function useDeleteStock({
       queryClient.invalidateQueries({
         queryKey: ['getStocks', 'getPriceEntries'],
       });
+      queryClient.refetchQueries()
+    },
+    onError: (error) => {
+      if (onError) {
+        onError(error);
+      }
+    },
+  });
+}
+
+interface GenericStockProps extends MutateProps {
+  id: string;
+}
+
+export function useEditStock({
+  onError = (_error: Error) => null,
+  onSuccess = () => null,
+}: GenericStockProps): UseMutationResult<
+  GetStocksResponse,
+  Error,
+  EditStockPayload,
+  unknown
+> {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload) => editStock(payload),
+    onSuccess: () => {
+      if (onSuccess) {
+        onSuccess();
+      }
+      queryClient.invalidateQueries({
+        queryKey: ['getStocks', 'getPriceEntries'],
+      });
+      queryClient.refetchQueries()
     },
     onError: (error) => {
       if (onError) {

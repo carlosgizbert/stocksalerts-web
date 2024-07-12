@@ -25,7 +25,7 @@ export const Content = () => {
             as={Link}
             href="/panel/price-entries"
             variant="bordered"
-            color="primary"
+            color="success"
           >
             ver todos
           </Button>
@@ -43,13 +43,13 @@ export const Content = () => {
       <section className="py-4">
         <div className="mb-4 flex w-full items-center gap-4 lg:px-0 max-w-[90rem] mx-auto">
           <h3 className="text-xl font-semibold flex items-center gap-2">
-            <FeatherIcon icon="activity" size={18} strokeWidth={1.5} /> Histórico de preços
+            <FeatherIcon icon="activity" size={18} strokeWidth={1.5} /> Ativos monitorados
           </h3>
           <Button
             as={Link}
             href="/panel/stocks"
             variant="bordered"
-            color="primary"
+            color="success"
           >
             Configurar
           </Button>

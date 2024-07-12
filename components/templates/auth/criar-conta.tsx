@@ -48,11 +48,11 @@ export const Register = () => {
   return (
     <div className="w-full flex flex-col md:w-96">
       <div className="text-3xl font-bold">
-        Criar conta <span className="text-yellow-600">grátis</span>
+        Criar conta <span className="text-success-600">grátis</span>
       </div>
       <div className="flex gap-2 mt-3 mb-6">
         <p className="text-gray-600">já possui conta?</p>
-        <Link className="font-bold text-yellow-600 hover:underline" href="/">
+        <Link className="font-bold text-success-600 hover:underline" href="/">
           entre aqui
         </Link>
       </div>
@@ -86,7 +86,7 @@ export const Register = () => {
         </div>
         <Button
           className="w-100"
-          color="warning"
+          color="success"
           fullWidth={false}
           type="submit"
           isLoading={isLoading}

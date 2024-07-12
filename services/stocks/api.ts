@@ -1,5 +1,6 @@
 import {
   CreateStockPayload,
+  EditStockPayload,
   GetPriceEntriesResponse,
   GetStocksResponse
 } from './dto';
@@ -29,14 +30,28 @@ export async function createStock(payload: CreateStockPayload) {
   return data;
 }
 
-// export async function patchFlag(payload: PatchFeatureFlagPayload) {
-//   const { data } = await api.patch(
-//     `${FLAGS_API_BASE_URL}/flags/auth/${payload.id}/`,
-//     payload,
-//   );
+export async function editStock(payload: EditStockPayload) {
+  const {
+    id,
+    check_frequency,
+    lower_tunnel_limit,
+    upper_tunnel_limit,
+    symbol
+  } = payload
 
-//   return data;
-// }
+  const { data } = await api.patch(
+    `${FLAGS_API_BASE_URL}/stock/${id}`,
+    {
+      check_frequency,
+      lower_tunnel_limit,
+      upper_tunnel_limit,
+      symbol,
+      description: ''
+    },
+  );
+
+  return data;
+}
 
 export async function deleteStock(id: string) {
   const { data } = await api.delete(

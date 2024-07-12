@@ -39,12 +39,12 @@ export default function Login() {
   return (
     <div className="w-full flex flex-col md:w-96">
       <div className="text-3xl font-bold">
-        Acessar <span className="text-yellow-600">Stock</span>Alerts
+        Acessar <span className="text-success-600">Stock</span>Alerts
       </div>
       <div className="flex flex-wrap gap-2 mt-3 mb-6">
         <p className="text-gray-400">não tem uma conta?</p>
         <Link
-          className="font-bold text-yellow-600 hover:underline"
+          className="font-bold text-success-600 hover:underline"
           href="/criar-conta"
         >
           crie sua conta gratuita
@@ -84,7 +84,7 @@ export default function Login() {
         </Link>
         <Button
           className="w-full"
-          color="warning"
+          color="success"
           fullWidth={false}
           type="submit"
           variant="solid"

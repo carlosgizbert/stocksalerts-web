@@ -1,11 +1,11 @@
 import {
   Button,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Tooltip,
   useDisclosure,
 } from "@nextui-org/react";
 import FeatherIcon from "feather-icons-react";
@@ -36,6 +36,7 @@ export const DeleteStock = ({ data }: DeleteStockProps) => {
 
   return (
     <div>
+      <Tooltip color="danger" content="Excluir">
       <Button
         isIconOnly
         color="danger"
@@ -49,6 +50,7 @@ export const DeleteStock = ({ data }: DeleteStockProps) => {
           size={20}
         />
       </Button>
+      </Tooltip>
       <Modal isOpen={isOpen} onOpenChange={onClose} placement="top-center">
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">
