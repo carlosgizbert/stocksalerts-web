@@ -43,7 +43,7 @@ export const Content = () => {
       <section className="py-4">
         <div className="mb-4 flex w-full items-center gap-4 lg:px-0 max-w-[90rem] mx-auto">
           <h3 className="text-xl font-semibold flex items-center gap-2">
-            <FeatherIcon icon="layers" size={18} strokeWidth={1.5} />Ativos</h3>
+            <FeatherIcon icon="layers" size={18} strokeWidth={1.5} />Ativos monitorados</h3>
           <Button
             as={Link}
             href="/panel/stocks"

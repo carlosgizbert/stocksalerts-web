@@ -1,3 +1,4 @@
+import { deleteAuthCookie } from '@/actions/auth.action';
 import { authJwtKey } from '@/utils/constants';
 import axios, { AxiosError } from 'axios';
 import { getCookie } from 'cookies-next';
@@ -43,6 +44,7 @@ api.interceptors.response.use(
     if (response && response.status === 401) {
       await signOut({ redirect: false });
       console.error("Logging out due to 401 error");
+      deleteAuthCookie()
       toast.error('Credenciais expiradas. Por favor entre novamente.')
       redirect('/')
     }
