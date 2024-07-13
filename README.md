@@ -13,7 +13,7 @@ Cadastrar, alterar e excluir ativos e rastrealos com base no valor minimo e máx
 ### principais tecnologias
 * <a href="https://bun.sh/" about="_blank">Bun</a> (Runtime javascript)
 * <a href="https://nextjs.org/" about="_blank">Nextjs</a> (React Framework)
-* <a href="https://tanstack.com/query/latest/docs/framework/react/overview">ReactQuery/a> (Frontend Cachek)
+* <a href="https://tanstack.com/query/latest/docs/framework/react/overview">ReactQuery</a> (Frontend Cachek)
 * <a href="https://next-auth.js.org/" about="_blank">NextAuth</a> (Autenticação)
 * <a href="https://nextui.org/" about="_blank">NextUI (UI)</a> (+ tailwindcss)
 
